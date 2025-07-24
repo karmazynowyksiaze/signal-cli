@@ -155,7 +155,7 @@ signal-cli jest licencjonowany na licencji GPLv3: http://www.gnu.org/licenses/gp
 
 # Signal Webhook Server
 
-Serwer webhook napisany w Pythonie umożliwiający wysyłanie wiadomości Signal przez API REST przy użyciu signal-cli. Idealny do integracji z systemami zewnętrznymi, alertami monitoringowymi i automatyzacji powiadomień.
+Serwer webhook napisany w Pythonie umożliwiający wysyłanie wiadomości Signal przez API REST przy użyciu signal-cli. Uruchamiony jest na porcie 5000 - standardowy port serwera Python Flask.
 
 ## Funkcjonalności
 
@@ -170,7 +170,7 @@ Serwer webhook napisany w Pythonie umożliwiający wysyłanie wiadomości Signal
 ## Wymagania
 
 ### Systemowe
-- Python 3.7+
+- Python 3.11+
 - signal-cli (zainstalowany i skonfigurowany)
 - Zarejestrowany numer Signal w signal-cli
 
