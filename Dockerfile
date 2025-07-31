@@ -7,9 +7,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalacja signal-cli
-RUN wget -O signal-cli.tar.gz https://github.com/AsamK/signal-cli/releases/download/v0.13.18/signal-cli-0.13.18-Linux-native.tar.gz  \
-    && tar xf signal-cli.tar.gz -C /opt \
-    && ln -sf /opt/signal-cli-*/bin/signal-cli /usr/local/bin/
+RUN wget  https://github.com/AsamK/signal-cli/releases/download/v0.13.18/signal-cli-0.13.18.tar.gz  \
+    && tar xf signal-cli-0.13.18.tar.gz -C /opt \
+    && ln -sf /opt/signal-cli-0.13.18/bin/signal-cli /usr/local/bin/
 
 WORKDIR /app
 
