@@ -30,19 +30,19 @@ ENV PATH="$JAVA_HOME/bin:$PATH"
 # Instalacja signal-cli
 RUN wget  https://github.com/AsamK/signal-cli/releases/download/v0.13.18/signal-cli-0.13.18.tar.gz  \
     && tar xf signal-cli-0.13.18.tar.gz -C /opt \
-    && ln -sf /opt/signal-cli-0.13.18/bin/signal-cli /usr/local/bin/& \
-    rm signal-cli-0.13.18.tar.gz
+    && ln -sf /opt/signal-cli-0.13.18/bin/signal-cli /usr/local/bin/ \
+    rm /opt/signal-cli-0.13.18.tar.gz
 
 # Ustawienie katalogu roboczego
-WORKDIR /app
+WORKDIR /opt/signal-cli-0.13.18
 
 # Kopiowanie plików
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir flask python-dotenv
 
 COPY signal_webhook.py .
 
-RUN mkdir -p /app/logs
+RUN mkdir -p /opt/signal-cli-0.13.18
 
 EXPOSE 5000
 

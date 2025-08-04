@@ -26,7 +26,7 @@ app = Flask(__name__)
 
 #Authorization API
 def authorize_request():
-    api_key = request.headers.get('X-API-KEY')
+    api_key = request.headers.get('API_KEY')
     if not api_key or api_key != API_KEY:
         logger.warning("Unauthorized access attempt.")
         return False
