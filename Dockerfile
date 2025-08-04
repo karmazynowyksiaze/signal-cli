@@ -28,7 +28,7 @@ ENV JAVA_HOME=/opt/java/jdk-21.0.1+12
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Instalacja signal-cli
-RUN wget  https://github.com/AsamK/signal-cli/releases/download/v0.13.18/signal-cli-0.13.18.tar.gz  \
+RUN wget https://github.com/AsamK/signal-cli/releases/download/v0.13.18/signal-cli-0.13.18.tar.gz  \
     && tar xf signal-cli-0.13.18.tar.gz -C /opt \
     && ln -sf /opt/signal-cli-0.13.18/bin/signal-cli /usr/local/bin/ \
     rm /opt/signal-cli-0.13.18.tar.gz
