@@ -25,19 +25,23 @@ API_KEY= os.environ.get('WEBHOOK_API_KEY')
 app = Flask(__name__)
 
 #Authorization API
-def is_authorized(req):
-    auth_header = req.headers.get("Authorization", "")
-    if auth_header.startsith("Bearer "):
-        token = auth_header.replace("Bearer ", "").strip()
-        return token in API_KEY
-    return False
+def authorize_request():
+    api_key = request.headers.get('X-API-KEY')
+    if not api_key or api_key != API_KEY:
+        logger.warning("Unauthorized access attempt.")
+        return False
+    return True
+
+@app.before_request
+def check_authorization():
+    # Only protect the /send endpoint (or add more as needed)
+    if request.endpoint == 'send_signal_message':
+        if not authorize_request():
+            return jsonify({'error': 'Unauthorized'}), 401
+
 
 @app.route('/send', methods=['POST'])
 def send_signal_message():
-    if not is_authorized():
-        logger.warning("Unathorized access attempt")
-        return jsonify({'error': 'Unathorized'}), 401
-    
     data = request.json
     logger.info(f"Received data: {data}")
 
