@@ -24,7 +24,7 @@ RUN mkdir -p /opt/java && \
     rm /tmp/jdk.tar.gz
 
 # Ustawienie JAVA_HOME i ścieżki
-ENV JAVA_HOME=/opt/java/jdk-21.0.1+12
+ENV JAVA_HOME=/opt/java/jdk-21.0.1+12-jre
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Instalacja signal-cli
@@ -37,7 +37,7 @@ WORKDIR /opt/signal-cli-0.13.18
 
 # Kopiowanie plików
 COPY requirements.txt .
-RUN pip install --no-cache-dir flask python-dotenv
+RUN python -m pip install --no-cache-dir flask python-dotenv
 
 COPY signal_webhook.py .
 
