@@ -27,6 +27,18 @@ RUN mkdir -p /opt/java && \
 ENV JAVA_HOME=/opt/java/jdk-21.0.1+12-jre
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
+# Konfiguracja proxy dla Javy
+ENV JAVA_TOOL_OPTIONS="-Dhttp.proxyHost=10.150.255.1 -Dhttp.proxyPort=8080 \
+    -Dhttps.proxyHost=10.150.255.1 -Dhttps.proxyPort=8080 \
+    -Dhttp.nonProxyHosts=localhost|127.0.0.1|10.*.*.* \
+    -Djava.net.useSystemProxies=true"
+
+# Konfiguracja proxy dla systemu
+ENV HTTP_PROXY="http://10.150.255.1:8080"
+ENV HTTPS_PROXY="http://10.150.255.1:8080"
+ENV NO_PROXY="localhost,127.0.0.1,::1,10.0.0.0/8"
+
+
 # Instalacja signal-cli
 RUN wget https://github.com/AsamK/signal-cli/releases/download/v0.13.18/signal-cli-0.13.18.tar.gz  \
     && tar xf signal-cli-0.13.18.tar.gz -C /opt \
