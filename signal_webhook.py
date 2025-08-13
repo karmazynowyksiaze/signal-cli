@@ -26,15 +26,19 @@ app = Flask(__name__)
 
 @app.route('/send', methods=['POST'])
 def send_signal_message():
-    # Check API key authorization
-    api_key = request.headers.get('API_KEY')
+    # DEBUG: Sprawdź wszystkie nagłówki
+    logger.info(f"All received headers: {dict(request.headers)}")
+    
+    # Check API key authorization - try multiple header names
+    api_key = (request.headers.get('API_KEY') or 
+               request.headers.get('Authorization') or 
+               request.headers.get('X-API-KEY') or
+               request.headers.get('api-key'))
+    logger.info(f"Looking for API key in headers, found: '{api_key}'")
     if not api_key or api_key != API_KEY:
         logger.warning(f"Unauthorized access attempt. Received: '{api_key}', Expected: '{API_KEY}'")
         return jsonify({'error': 'Unauthorized'}), 401
     
-    data = request.json
-    logger.info(f"Received data: {data}")
-
     if not data or 'message' not in data:
         logger.warning('Missing message')
         return jsonify({'error': 'Missing message'}), 400
