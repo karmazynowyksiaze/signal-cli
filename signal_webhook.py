@@ -20,28 +20,18 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 SIGNAL_NUMBER = os.environ.get('SIGNAL_NUMBER')
 SIGNAL_GROUP_ID = os.environ.get('SIGNAL_GROUP_ID')
-API_KEY= os.environ.get('WEBHOOK_API_KEY')
+API_KEY = os.environ.get('WEBHOOK_API_KEY')
 
 app = Flask(__name__)
 
-#Authorization API
-def authorize_request():
-    api_key = request.headers.get('API_KEY')
-    if not api_key or api_key != API_KEY:
-        logger.warning("Unauthorized access attempt.")
-        return False
-    return True
-
-@app.before_request
-def check_authorization():
-    # Only protect the /send endpoint (or add more as needed)
-    if request.endpoint == 'send_signal_message':
-        if not authorize_request():
-            return jsonify({'error': 'Unauthorized'}), 401
-
-
 @app.route('/send', methods=['POST'])
 def send_signal_message():
+    # Check API key authorization
+    api_key = request.headers.get('API_KEY')
+    if not api_key or api_key != API_KEY:
+        logger.warning(f"Unauthorized access attempt. Received: '{api_key}', Expected: '{API_KEY}'")
+        return jsonify({'error': 'Unauthorized'}), 401
+    
     data = request.json
     logger.info(f"Received data: {data}")
 
@@ -65,4 +55,5 @@ def send_signal_message():
 
 if __name__ == '__main__':
     logger.info("Starting Signal webhook server...")
+    logger.info(f"API_KEY loaded: '{API_KEY}'")
     app.run(host='0.0.0.0', port=5000)
