@@ -20,8 +20,7 @@ RUN ln -sf /usr/bin/python3.11 /usr/bin/python
 # Instalacja JDK 21 (Adoptium)
 RUN mkdir -p /opt/java && \
     wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.1+12/OpenJDK21U-jre_x64_linux_hotspot_21.0.1_12.tar.gz -O /tmp/jdk.tar.gz && \
-    tar -xzf /tmp/jdk.tar.gz -C /opt/java && \
-    rm /tmp/jdk.tar.gz
+    tar -xzf /tmp/jdk.tar.gz -C /opt/java
 
 # Ustawienie JAVA_HOME i ścieżki
 ENV JAVA_HOME=/opt/java/jdk-21.0.1+12-jre
